@@ -5,7 +5,7 @@ import {
 } from "@nestjs/common";
 import { PrismaService } from "src/prisma.service";
 import { Patient, Prisma } from "@prisma/client";
-import { PatientDto } from "../dtos/patient.dto";
+import { PatientDto } from "../dtos/patientDTO.dto";
 
 @Injectable()
 export class PatientService {
