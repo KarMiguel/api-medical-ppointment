@@ -14,19 +14,27 @@ datasource db {
 }
 
 
-model Patient {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
-  phone String
 
+model Patient {
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique
+  phone       String
   appointments Appointment[]
 }
 
 model Doctor {
-  id        Int    @id @default(autoincrement())
-  name      String
-  specialty String
-
+  id          Int          @id @default(autoincrement())
+  name        String
+  specialty   String
   appointments Appointment[]
+}
+
+model Appointment {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  patientId Int
+  doctorId  Int
+  patient   Patient  @relation(fields: [patientId], references: [id])
+  doctor    Doctor   @relation(fields: [doctorId], references: [id])
 }
