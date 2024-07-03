@@ -7,12 +7,18 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { PatientService } from "../services/patient.service";
 import { Patient, Prisma } from "@prisma/client";
 import { PatientDto } from "../dtos/patientDTO.dto";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
-@Controller("patients")
+@ApiTags("Patients")
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller("api/v1/patients")
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 

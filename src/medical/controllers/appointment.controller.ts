@@ -9,12 +9,18 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { AppointmentService } from "../services/appointment.service";
 import { Appointment } from "@prisma/client";
 import { AppointmentDto } from "../dtos/appointmentDto.dto";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
-@Controller("appointments")
+@ApiTags("Appointments")
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller("api/v1/appointments")
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 

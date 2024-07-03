@@ -9,12 +9,18 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { DoctorService } from "../services/doctor.service";
 import { Doctor, Prisma } from "@prisma/client";
 import { DoctorDto } from "../dtos/doctorDto.dto";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
-@Controller("doctors")
+@ApiTags("Doctors")
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller("api/v1/doctors")
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
@@ -22,7 +28,6 @@ export class DoctorController {
   findAll(): Promise<Doctor[]> {
     return this.doctorService.findAll();
   }
-
 
   @Get(":id")
   async findOne(@Param("id") id: string): Promise<Doctor> {
